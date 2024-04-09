@@ -265,7 +265,9 @@ mkdir -p proc
 mount -v -t proc none proc
 mount_bind /dev dev
 mount_bind /sys sys
-mount_bind "$RUNNER_HOME/work" "${RUNNER_HOME#/}/work"
+mount_bind "$GITHUB_WORKSPACE" "${GITHUB_WORKSPACE#/}"
+[ -d /run/act ] &&
+mount_bind /run/act run/act
 
 # Some systems (Ubuntu?) symlinks /dev/shm to /run/shm.
 if [ -L /dev/shm ] && [ -d /run/shm ]; then
